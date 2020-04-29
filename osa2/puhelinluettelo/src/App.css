@@ -4,26 +4,70 @@
 
 h2{
   font-style: normal;
+  font-family: sans-serif;
+  font-size: 300%;
+  font-weight: lighter;
+  font-variant: small-caps;
+  color: #C77F62;
+  margin-bottom: 0;
 }
 
 h3{
   font-style: normal;
+  font-weight: lighter;
+  font-size: 180%;
+  font-family: sans-serif;
+  font-variant: small-caps;
+  margin-bottom: 0;
+  color: #C77F62
 }
 
 div{
-  font-style: italic;
+  font-style: normal;
   padding-left: 5px;
+  background-color:#012325;
+  color: #BFB8A3
 }
 
 .error{
-  color:black;
-  background: pink;
-  font-size: 15px;
-  border-style: solid;
-  border-radius: 5px;
+  color:#012325;
+  background: #C77F62;
+  font-size: 13px;
   padding: 10px;
   margin-bottom: 10px;
 }
+
+button{
+  font-variant: small-caps;
+  background-color: #012325;
+  border-color: #BFB8A3;
+  border-width: thin;
+  padding: 5px;
+  color: #BFB8A3;
+}
+
+button:hover{
+  border-color: #C77F62;
+  color: #C77F62
+}
+
+button, input:focus{
+  outline:none;
+}
+
+input{
+  background-color: #012325;
+  border-color: #BFB8A3;
+  border-width: thin;
+  padding: 5px;
+  color: #BFB8A3;
+}
+
+input, label{
+  display:block;
+  margin-bottom: 8px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

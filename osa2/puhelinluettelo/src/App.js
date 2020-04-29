@@ -8,13 +8,7 @@ import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
-  const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1231244'},
-    { name: 'Ada Lovelace', number: '+31-231-12314'},
-    { name: 'Dan Abramov', number: '12-43-234345'},
-    { name: 'Mary Poppendieck', number: '39-23-6423122'}
-  ]) 
-  
+  const [ persons, setPersons] = useState([]) 
   //syötettä varten
   const [newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
@@ -25,7 +19,7 @@ const App = () => {
   useEffect(() => {
     personService
     .getAll()
-      .then((initialPersons) => {
+      .then(initialPersons => {
       setPersons(initialPersons)
       })
   }, [])
@@ -37,7 +31,7 @@ const App = () => {
     return person.name.toLowerCase().includes(showOnly.toLowerCase())
   })
 
-  //Lisää henkilö
+  //Lisää henkilö (+ehdot onnistuneeseen lisäykseen)
   const addPerson = (event) =>{
     event.preventDefault()
     const personObject = {name: newName, number: newNumber}
@@ -58,6 +52,7 @@ const App = () => {
           })
       }
     } else{
+      console.log(` PersonObject = ${personObject}`)
       personService
       .create(personObject)
         .then(returnedPerson => {
@@ -69,11 +64,19 @@ const App = () => {
           setNewName('')
           setNewNumber('')
       })
+      .catch((error) => 
+      // pääset käsiksi palvelimen palauttamaan virheilmoitusolioon näin
+        setMessage(error.response.data.error)
+      )
+      setTimeout(() => {
+        setMessage(null)
+      }, 4000)
     }
   }
 
   //Poista henkilö
   const handleDelete = (id) => {
+    console.log(` Delete id: ${id} is`)
     const remove = persons.find(person => person.id === id)
     const confirm = window.confirm(`Delete ${remove.name} ?`)
 

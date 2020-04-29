@@ -6,13 +6,13 @@ const PersonForm = props => {
         <label> name: </label>
         <input value={props.name}
           onChange={props.handleName}/>
-  
+
         <label> number: </label>
         <input value={props.number} 
           onChange={props.handleNumber}/>
-  
-        <div><button type="submit">add</button></div>
-        </form>
+        <b></b>
+        <button type="submit">add</button>
+      </form>
     )
   }
 
