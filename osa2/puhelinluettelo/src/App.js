@@ -8,8 +8,7 @@ import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
-  const [ persons, setPersons] = useState([]) 
-  //syötettä varten
+  const [ persons, setPersons] = useState([])
   const [newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [showOnly, setShowOnly] = useState('')
@@ -31,16 +30,18 @@ const App = () => {
     return person.name.toLowerCase().includes(showOnly.toLowerCase())
   })
 
-  //Lisää henkilö (+ehdot onnistuneeseen lisäykseen)
+  //Lisää henkilö (+ ehdot onnistuneeseen lisäykseen)
   const addPerson = (event) =>{
     event.preventDefault()
     const personObject = {name: newName, number: newNumber}
     const allNumbers = persons.map(person => person.name.toLowerCase())
-    const changeNumber = persons.find(person => person.name === newName)
-
+    const changeNumber = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
+    
     if(allNumbers.includes(newName.toLowerCase())){
+      console.log(`Change person: ${changeNumber}`)
       const confirm = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one`) 
-      if (confirm) {
+      if (confirm && newNumber.length > 7) {
+        personObject.name = changeNumber.name
         personService
         .update(changeNumber.id, personObject)
           .then(returnedPerson => {
@@ -51,9 +52,8 @@ const App = () => {
             setPersons(persons.map(person => person.id !== changeNumber.id ? person : returnedPerson))
           })
       }
-    } else{
-      console.log(` PersonObject = ${personObject}`)
-      personService
+    }
+       personService
       .create(personObject)
         .then(returnedPerson => {
           setMessage(`Added ${personObject.name}`)
@@ -71,12 +71,11 @@ const App = () => {
       setTimeout(() => {
         setMessage(null)
       }, 4000)
-    }
   }
 
   //Poista henkilö
   const handleDelete = (id) => {
-    console.log(` Delete id: ${id} is`)
+    console.log(` Delete id: ${id}`)
     const remove = persons.find(person => person.id === id)
     const confirm = window.confirm(`Delete ${remove.name} ?`)
 
